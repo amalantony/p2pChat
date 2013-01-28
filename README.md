@@ -1,7 +1,4 @@
 p2pChat
-<<<<<<< HEAD
 =======
 
-=======
-=======
->>>>>>> 62bc872153ff9b725a78b466fe5c15aff2244197
+Made a simple server which accepts IPv4 and IPv6 connections. This server doesn't log the client connections yet.
