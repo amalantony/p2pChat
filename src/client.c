@@ -15,7 +15,7 @@
 	strcpy(s, "60000")
 
 #define set_server(s) \
-	strcpy(s, "127.0.0.1")
+	strcpy(s, "192.168.2.4")
 	
 
 int main(){
@@ -23,6 +23,7 @@ int main(){
 	struct addrinfo *result;
 	char port_no[8], server_address[30];
 	int status;
+	int socket_fd; // socket file descriptor
 	set_port(port_no);
 	set_server(server_address);
 	
@@ -35,8 +36,16 @@ int main(){
 	hints.ai_socktype = SOCK_STREAM;
 	
 	if(status = getaddrinfo(server_address, port_no, &hints, &result )!=0){
-		printf("Could not assign address, getaddrinfo() error : %s", gai_strerror(status));
+		printf("getaddrinfo() error : %s", gai_strerror(status));
 		exit(EXIT_FAILURE);
 	}
 	
+	if(socket_fd = socket(result->ai_family, result->ai_socktype, result->ai_protocol) == -1)	{
+		printf("Error creating socket to server! \n");
+	}
+	
+	if(connect(socket_fd, result->ai_addr, result->ai_addrlen)==-1){
+		printf("Error connecting!\n");
+		exit(EXIT_FAILURE);	
+	}
 }
