@@ -15,7 +15,7 @@
 	strcpy(s, "60000")
 
 #define set_server(s) \
-	strcpy(s, "192.168.2.4")
+	strcpy(s, "127.0.0.1")
 	
 
 int main(){
@@ -35,17 +35,18 @@ int main(){
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	
-	if(status = getaddrinfo(server_address, port_no, &hints, &result )!=0){
+	if((status = getaddrinfo(server_address, port_no, &hints, &result ))!=0){
 		printf("getaddrinfo() error : %s", gai_strerror(status));
 		exit(EXIT_FAILURE);
 	}
 	
-	if(socket_fd = socket(result->ai_family, result->ai_socktype, result->ai_protocol) == -1)	{
+	if((socket_fd = socket(result->ai_family, result->ai_socktype, result->ai_protocol)) == -1)	{
 		printf("Error creating socket to server! \n");
 	}
 	
+	printf("%d ", result->ai_addrlen);
 	if(connect(socket_fd, result->ai_addr, result->ai_addrlen)==-1){
-		printf("Error connecting!\n");
+		perror("Error connecting!\n");
 		exit(EXIT_FAILURE);	
 	}
 }
