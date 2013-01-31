@@ -21,7 +21,7 @@
 int main(){
 	struct addrinfo hints;
 	struct addrinfo *result;
-	char port_no[8], server_address[30];
+	char port_no[8], server_address[30], buffer[MAX_BUFLEN];
 	int status;
 	int socket_fd; // socket file descriptor
 	set_port(port_no);
@@ -49,4 +49,7 @@ int main(){
 		perror("Error connecting!\n");
 		exit(EXIT_FAILURE);	
 	}
+	// sending sample data to buffer
+	strcpy(buffer,"amalantony@gmail.com");
+	write(socket_fd, buffer, MAX_BUFLEN);
 }
